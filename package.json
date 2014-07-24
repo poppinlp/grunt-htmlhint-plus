@@ -1,0 +1,39 @@
+{
+    "name": "grunt-htmlhint-plus",
+    "version": "0.0.1",
+    "description": "Grunt task to hint html code. Support template.",
+    "main": "tasks/htmlhintplus.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/poppinlp/grunt-htmlhint-plus"
+    },
+    "bugs": {
+        "url": "https://github.com/poppinlp/grunt-htmlhint-plus/issues"
+    },
+    "author": {
+        "name": "PoppinL",
+        "email": "poppinlp@gmail.com",
+        "url": "http://poppinlp.github.io"
+    },
+    "license": "MIT",
+    "readmeFilename": "README.md",
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "keywords": [
+        "gruntplugin",
+        "html",
+        "hint",
+        "django"
+    ],
+    "scripts": {
+        "test": "grunt test"
+    },
+    "dependencies": {
+        "grunt": ">=0.4.0",
+        "htmlhint": ">=0.9.6"
+    },
+    "devDependencies": {
+        "grunt-contrib-jshint": ">=0.10.0"
+    }
+}
