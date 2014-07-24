@@ -119,4 +119,5 @@ grunt test
 
 ### History
 
+- Ver 0.0.2 Fix global options not work
 - Ver 0.0.1 Main

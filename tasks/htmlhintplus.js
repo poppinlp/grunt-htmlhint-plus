@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         var HTMLHint = require("htmlhint").HTMLHint,
             config = grunt.config.get('htmlhintplus'),
             ln = grunt.util.linefeed,
-            defaultOptions = {
+            defaultRules = {
                 "tagname-lowercase": true,
                 "attr-lowercase": true,
                 "attr-value-double-quotes": true,
@@ -49,6 +49,10 @@ module.exports = function(grunt) {
 
             if (task.htmlhintrc) {
                 task.rules = grunt.file.readJSON(task.htmlhintrc);
+            } else if (globalOptions.htmlhintrc) {
+                task.rules = grunt.file.readJSON(globalOptions.htmlhintrc);
+            } else if (!task.rules) {
+                task.rules = defaultRules;
             }
 
             len = task.src.length;
