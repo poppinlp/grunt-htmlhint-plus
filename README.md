@@ -1,5 +1,7 @@
 # Grunt-htmlhint-plus
 
+[![Build Status](https://travis-ci.org/poppinlp/grunt-htmlhint-plus.png?branch=master)](https://travis-ci.org/poppinlp/grunt-htmlhint-plus)
+
 Grunt task to hint html code. Support template.
 
 ### Getting Started
