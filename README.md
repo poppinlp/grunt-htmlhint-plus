@@ -1,6 +1,8 @@
 # Grunt-htmlhint-plus
 
 [![Build Status](https://travis-ci.org/poppinlp/grunt-htmlhint-plus.png?branch=master)](https://travis-ci.org/poppinlp/grunt-htmlhint-plus)
+[![Dependency Status](https://david-dm.org/poppinlp/grunt-htmlhint-plus.svg)](https://david-dm.org/poppinlp/grunt-htmlhint-plus)
+[![devDependency Status](https://david-dm.org/poppinlp/grunt-htmlhint-plus/dev-status.svg)](https://david-dm.org/poppinlp/grunt-htmlhint-plus#info=devDependencies)
 
 Grunt task to hint html code. Support template.
 
@@ -138,6 +140,10 @@ grunt test
 
 ## History
 
+- Ver 0.0.4
+    - Fix README
+    - Bugfix about `filter.cwd`
+    - Update `dir2pattern` to 0.0.3 to fix bug
 - Ver 0.0.3
     - Support `newer` config option
     - Support file path pattern

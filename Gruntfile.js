@@ -8,8 +8,11 @@ module.exports = function(grunt) {
         },
         htmlhintplus: {
             dist: {
-                src: ['test/*.html'],
-                django: true
+                src: ['*.html'],
+                django: true,
+                filter: {
+                    cwd: 'test'
+                }
             }
         }
     });

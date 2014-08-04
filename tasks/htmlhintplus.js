@@ -64,7 +64,7 @@ module.exports = function(grunt) {
         }
 
         function doTask (task) {
-            var text, list, len, lastChange, file;
+            var text, list, len, lastChange, src;
 
             // 读规则
             if (task.htmlhintrc) {
@@ -90,24 +90,24 @@ module.exports = function(grunt) {
             if (!timestamp[task]) timestamp[task] = {};
             len = list.length;
             while (len--) {
-                file = list[len];
-                lastChange = fs.statSync(file).mtime.getTime();
-                if (globalOptions.newer && timestamp[task][file] && timestamp[task][file] === lastChange) continue;
+                src = nodePath.normalize((task.filter ? (task.filter.cwd || '.') : '.') + nodePath.sep + list[len]);
+                lastChange = fs.statSync(src).mtime.getTime();
+                if (globalOptions.newer && timestamp[task][src] && timestamp[task][src] === lastChange) continue;
 
-                timestamp[task][file] = lastChange;
-                text = grunt.file.read(list[len], encoding);
+                timestamp[task][src] = lastChange;
+                text = grunt.file.read(src, encoding);
                 if (globalOptions.django || task.django) {
                     text = django(text);
                 }
                 text = HTMLHint.verify(text, task.rules);
                 if (text.length > 0) {
                     hasHint = true;
-                    grunt.log.errorlns('HtmlHintPlus: ' + text.length + ' warnings in ' + list[len] + '...');
+                    grunt.log.errorlns('HtmlHintPlus: ' + text.length + ' warnings in ' + src + '...');
                     text.forEach(function (message) {
                         grunt.log.writeln( "[".red + ( "L" + message.line ).yellow + ":".red + ( "C" + message.col ).yellow + "]".red + ' ' + message.message.yellow );
                     });
                 } else {
-                    grunt.log.ok('HtmlHintPuls: ' + list[len] + ' hint well...');
+                    grunt.log.ok('HtmlHintPuls: ' + src + ' hint well...');
                 }
             }
         }
