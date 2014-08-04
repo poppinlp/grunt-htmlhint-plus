@@ -140,6 +140,7 @@ grunt test
 
 ## History
 
+- Ver 0.0.5 Bugfix
 - Ver 0.0.4
     - Fix README
     - Bugfix about `filter.cwd`

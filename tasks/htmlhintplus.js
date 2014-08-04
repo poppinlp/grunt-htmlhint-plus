@@ -94,7 +94,6 @@ module.exports = function(grunt) {
                 lastChange = fs.statSync(src).mtime.getTime();
                 if (globalOptions.newer && timestamp[task][src] && timestamp[task][src] === lastChange) continue;
 
-                timestamp[task][src] = lastChange;
                 text = grunt.file.read(src, encoding);
                 if (globalOptions.django || task.django) {
                     text = django(text);
@@ -108,6 +107,7 @@ module.exports = function(grunt) {
                     });
                 } else {
                     grunt.log.ok('HtmlHintPuls: ' + src + ' hint well...');
+                    timestamp[task][src] = lastChange;
                 }
             }
         }
