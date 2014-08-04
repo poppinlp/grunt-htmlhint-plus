@@ -11,6 +11,9 @@
 module.exports = function(grunt) {
     grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint. Support template.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
+            fixPattern = require('dir2pattern').fix,
+            fs = require('fs'),
+            nodePath = require('path'),
             config = grunt.config.get('htmlhintplus'),
             ln = grunt.util.linefeed,
             defaultRules = {
@@ -24,20 +27,36 @@ module.exports = function(grunt) {
                 "src-not-empty": true,
                 "attr-no-duplication": true
             },
+            cwd = __dirname + nodePath.sep + '..' + nodePath.sep,
+            timestampPath = cwd + 'config' + nodePath.sep + 'timestamp.json',
+            timestamp = {},
+            defaultTimestamp = {},
             globalOptions = extend({
-                    django: false,
-                    force: false
-                }, config.options ? config.options : {}
+                    force: false,
+                    newer: true
+                }, config.options || {}
             ),
+            encoding = { encoding: 'utf8' },
             hasHint = false,
             task;
 
-        for (task in config) {
-            if (config.hasOwnProperty(task)) {
-                if (task !== 'options') {
-                    doTask(config[task]);
-                }
+        // read timestamp
+        if (globalOptions.newer) {
+            try {
+                timestamp = grunt.file.readJSON(timestampPath, encoding);
+            } catch (err) {
+                timestamp = defaultTimestamp;
             }
+        }
+
+        for (task in config) {
+            if (task !== 'options' && config.hasOwnProperty(task)) {
+                doTask(config[task]);
+            }
+        }
+
+        if (globalOptions.newer) {
+            grunt.file.write(timestampPath, JSON.stringify(timestamp), encoding);
         }
 
         if (!globalOptions.force && hasHint) {
@@ -45,8 +64,9 @@ module.exports = function(grunt) {
         }
 
         function doTask (task) {
-            var text, len, msg;
+            var text, list, len, lastChange, file;
 
+            // 读规则
             if (task.htmlhintrc) {
                 task.rules = grunt.file.readJSON(task.htmlhintrc);
             } else if (globalOptions.htmlhintrc) {
@@ -55,25 +75,40 @@ module.exports = function(grunt) {
                 task.rules = defaultRules;
             }
 
+            // 适配字符串或者数组
             len = task.src.length;
+            if (len) {
+                while (len--) {
+                    task.src[len] = fixPattern(task.src[len]);
+                }
+            } else {
+                task.src = fixPattern(task.src);
+            }
+
+            // 进行检测
+            list = grunt.file.expand(task.filter || {}, task.src);
+            if (!timestamp[task]) timestamp[task] = {};
+            len = list.length;
             while (len--) {
-                grunt.file.recurse(task.src[len], function (path, root, sub, file) {
-                    if (file[0] === '.' || path[0] === '.' || (sub && sub[0] === '.')) return;
-                    text = grunt.file.read(path, { encoding: 'utf8' });
-                    if (globalOptions.django || task.django) {
-                        text = django(text);
-                    }
-                    msg = HTMLHint.verify(text, task.rules);
-                    if (msg.length > 0) {
-                        hasHint = true;
-                        grunt.log.errorlns('HtmlHintPlus: ' + msg.length + ' warnings in ' + path + '...');
-                        msg.forEach(function (message) {
-                            grunt.log.writeln( "[".red + ( "L" + message.line ).yellow + ":".red + ( "C" + message.col ).yellow + "]".red + ' ' + message.message.yellow );
-                        });
-                    } else {
-                        grunt.log.ok('HtmlHintPuls: ' + path + ' hint well...');
-                    }
-                });
+                file = list[len];
+                lastChange = fs.statSync(file).mtime.getTime();
+                if (globalOptions.newer && timestamp[task][file] && timestamp[task][file] === lastChange) continue;
+
+                timestamp[task][file] = lastChange;
+                text = grunt.file.read(list[len], encoding);
+                if (globalOptions.django || task.django) {
+                    text = django(text);
+                }
+                text = HTMLHint.verify(text, task.rules);
+                if (text.length > 0) {
+                    hasHint = true;
+                    grunt.log.errorlns('HtmlHintPlus: ' + text.length + ' warnings in ' + list[len] + '...');
+                    text.forEach(function (message) {
+                        grunt.log.writeln( "[".red + ( "L" + message.line ).yellow + ":".red + ( "C" + message.col ).yellow + "]".red + ' ' + message.message.yellow );
+                    });
+                } else {
+                    grunt.log.ok('HtmlHintPuls: ' + list[len] + ' hint well...');
+                }
             }
         }
 
@@ -83,8 +118,7 @@ module.exports = function(grunt) {
         }
 
         function extend (self, other) {
-            var key;
-            for (key in other) {
+            for (var key in other) {
                 if (other.hasOwnProperty(key)) {
                     self[key] = other[key];
                 }

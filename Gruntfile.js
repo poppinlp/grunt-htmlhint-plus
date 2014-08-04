@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         },
         htmlhintplus: {
             dist: {
-                src: ['test/'],
+                src: ['test/*.html'],
                 django: true
             }
         }

@@ -1,6 +1,6 @@
 {
     "name": "grunt-htmlhint-plus",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Grunt task to hint html code. Support template.",
     "main": "tasks/htmlhintplus.js",
     "repository": {
@@ -31,7 +31,8 @@
     },
     "dependencies": {
         "grunt": ">=0.4.0",
-        "htmlhint": ">=0.9.6"
+        "htmlhint": ">=0.9.6",
+        "dir2pattern": ">=0.0.1"
     },
     "devDependencies": {
         "grunt-contrib-jshint": ">=0.10.0"

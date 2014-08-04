@@ -4,7 +4,7 @@
 
 Grunt task to hint html code. Support template.
 
-### Getting Started
+## Getting Started
 
 This plugin requires Grunt >=0.4.0
 
@@ -20,19 +20,19 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-htmlhint-plus');
 ```
 
-### Htmlhintplus Task
+## Htmlhintplus Task
 
 _Run this task with the `grunt htmlhintplus` command._
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 
-### Options
+## Options
 
-#### src
+### src
 
 Source path.
 
-#### rules
+### rules
 
 Htmlhint rules. Default is:
 
@@ -48,21 +48,29 @@ Htmlhint rules. Default is:
 
 The whole rules list please see [Rules](https://github.com/yaniswang/HTMLHint/wiki/Rules).
 
-#### htmlhintrc
+### htmlhintrc
 
 Htmlhintrc file path. Has higher priority than `rules` option.
 
-#### django
+### django
 
 Open support for django template. Default `false`.
 
-#### force
+### force
 
 Throw fatal fail or not at the end of this task, when there is hint error. Default `false`. Only work in global options.
 
-### Usage Examples
+### newer
 
-#### Basic
+Only hint changed file and new file. Default `true`. Only work in global options.
+
+### filter
+
+The src file path filter.See [this page](https://github.com/isaacs/minimatch#options) for more options about filter.
+
+## Usage Examples
+
+### Basic
 
 ```js
 // Project configuration
@@ -71,47 +79,56 @@ htmlhintplus: {
         rules: {
             'tag-pair': true
         },
-        src: ['path/to/**/*.html']
-    },
-    html2: {
-        rules: {
-            'tag-pair': true
-        },
-        src: ['path/to/**/*.html']
+        django: false,
+        src: ['path/to/file']
     }
 }
 ```
 
-#### Use htmlhintrc file
+### Use htmlhintrc file
 
 ```js
 // Project configuration
 htmlhintplus: {
     html: {
-        src: ['path/to/**/*.html'],
+        src: ['path/to/file'],
         htmlhintrc: 'path/to/file'
     }
 }
 ```
 
-#### Use global options
+### Use global options
 
 ```js
 // Project configuration
 jsmerge: {
     options: {
-        uglify: true
+        htmlhintrc: 'path/to/file'
     },
     html: {
-        rules: {
-            'tag-pair': true
-        },
-        src: ['path/to/**/*.html']
+        src: ['path/to/file']
     }
 }
 ```
 
-### Demo
+### Use file path pattern and filter
+
+```js
+// Project configuration
+jsmerge: {
+    options: {
+        htmlhintrc: 'path/to/file'
+    },
+    html: {
+        src: ['**/*.html'],
+        filter: {
+            cwd: 'path/to/'
+        }
+    }
+}
+```
+
+## Demo
 
 Run the test demo:
 
@@ -119,7 +136,11 @@ Run the test demo:
 grunt test
 ```
 
-### History
+## History
 
+- Ver 0.0.3
+    - Support `newer` config option
+    - Support file path pattern
+    - Support path filter
 - Ver 0.0.2 Fix global options not work
 - Ver 0.0.1 Main
