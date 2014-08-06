@@ -140,6 +140,7 @@ grunt test
 
 ## History
 
+- Ver 0.0.6 Update `dir2pattern` to 0.0.4
 - Ver 0.0.5 Bugfix
 - Ver 0.0.4
     - Fix README

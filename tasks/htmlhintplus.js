@@ -11,7 +11,7 @@
 module.exports = function(grunt) {
     grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint. Support template.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
-            fixPattern = require('dir2pattern').fix,
+            fixPattern = require('dir2pattern'),
             fs = require('fs'),
             nodePath = require('path'),
             config = grunt.config.get('htmlhintplus'),
