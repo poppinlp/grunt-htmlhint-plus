@@ -30,11 +30,11 @@ Task targets, files and options may be specified according to the grunt [Configu
 
 ## Options
 
-### src
+### src {String|Array}
 
-Source path.
+Source path. Support file path, glob and globs.
 
-### rules
+### rules {Object}
 
 Htmlhint rules. Default is:
 
@@ -48,27 +48,27 @@ Htmlhint rules. Default is:
 - "src-not-empty": true
 - "attr-no-duplication": true
 
-The whole rules list please see [Rules](https://github.com/yaniswang/HTMLHint/wiki/Rules).
+For the whole rules list, please see [Rules page](https://github.com/yaniswang/HTMLHint/wiki/Rules).
 
-### htmlhintrc
+### htmlhintrc {String}
 
 Htmlhintrc file path. Has higher priority than `rules` option.
 
-### django
+### django {Boolean}
 
 Open support for django template. Default `false`.
 
-### force
+### force {Boolean}
 
 Throw fatal fail or not at the end of this task, when there is hint error. Default `false`. Only work in global options.
 
-### newer
+### newer {Boolean}
 
 Only hint changed file and new file. Default `true`. Only work in global options.
 
-### filter
+### filter {Object}
 
-The src file path filter.See [this page](https://github.com/isaacs/minimatch#options) for more options about filter.
+The options for glob in `files.src`. Please see [options page](https://github.com/isaacs/minimatch#options) for more detail.
 
 ## Usage Examples
 
@@ -113,7 +113,7 @@ jsmerge: {
 }
 ```
 
-### Use file path pattern and filter
+### Use glob and filter
 
 ```js
 // Project configuration
