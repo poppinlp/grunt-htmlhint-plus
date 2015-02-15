@@ -65,10 +65,6 @@ For the whole rules list, please see [Rules page](https://github.com/yaniswang/H
 
 Htmlhintrc file path. Has higher priority than `rules` option.
 
-### django {Boolean}
-
-Open support for django template. Default `false`.
-
 ### force {Boolean}
 
 Throw fatal fail or not at the end of this task, when there is hint error. Default `false`. Only work in global options.
@@ -80,6 +76,10 @@ Only hint changed file and new file. Default `true`. Only work in global options
 ### filter {Object}
 
 The options for glob in `files.src`. Please see [options page](https://github.com/isaacs/minimatch#options) for more detail.
+
+### ignore {Object}
+
+Ignore strings between key and value from this object. Default `{}`. Only work in task options.
 
 ## Usage Examples
 
@@ -151,6 +151,7 @@ grunt test
 
 ## History
 
+- Ver 0.0.7 Remove `django` option; Add `ignore` option to support it and more; Fix some bugs; Add default rules
 - Ver 0.0.6 Update `dir2pattern` to 0.0.4
 - Ver 0.0.5 Bugfix
 - Ver 0.0.4

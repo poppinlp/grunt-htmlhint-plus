@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         }
 
         function doTask (task) {
-            var text, list, len, lastChange, src;
+            var text, list, len, lastChange, src, key, reg;
 
             // 读规则
             if (task.htmlhintrc) {
@@ -106,8 +106,13 @@ module.exports = function(grunt) {
                 if (globalOptions.newer && timestamp[task][src] && timestamp[task][src] === lastChange) continue;
 
                 text = grunt.file.read(src, encoding);
-                if (globalOptions.django || task.django) {
-                    text = django(text);
+                if (task.ignore) {
+                    for (key in task.ignore) {
+                        if (task.ignore.hasOwnProperty(key)) {
+                            reg = new RegExp(key + '.*?' + task.ignore[key], 'ig');
+                            text = text.replace(reg, '');
+                        }
+                    }
                 }
                 text = HTMLHint.verify(text, task.rules);
                 if (text.length > 0) {
@@ -121,11 +126,6 @@ module.exports = function(grunt) {
                     timestamp[task][src] = lastChange;
                 }
             }
-        }
-
-        function django (text) {
-            text = text.replace(/{%\s*else\s*%}[\s\S]*?{%\s*endif\s*%}/img, '');
-            return text.replace(/{[%{].*?[%}]}/img, '');
         }
 
         function extend (self, other) {
