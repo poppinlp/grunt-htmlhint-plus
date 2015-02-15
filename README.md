@@ -38,15 +38,26 @@ Source path. Support file path, glob and globs.
 
 Htmlhint rules. Default is:
 
-- "tagname-lowercase": true
-- "attr-lowercase": true
-- "attr-value-double-quotes": true
-- "doctype-first": true
-- "tag-pair": true
-- "spec-char-escape": true
-- "id-unique": true
-- "src-not-empty": true
-- "attr-no-duplication": true
+- "tagname-lowercase": true,
+- "attr-lowercase": true,
+- "attr-value-double-quotes": true,
+- "attr-value-not-empty": true,
+- "attr-no-duplication": true,
+- "doctype-first": true,
+- "tag-pair": true,
+- "tag-self-close": false,
+- "spec-char-escape": true,
+- "id-unique": true,
+- "src-not-empty": true,
+- "head-script-disabled": false,
+- "img-alt-require": true,
+- "doctype-html5": true,
+- "id-class-value": "dash",
+- "style-disabled": false,
+- "space-tab-mixed-disabled": true,
+- "id-class-ad-disabled": true,
+- "href-abs-or-rel": true,
+- "attr-unsafe-chars": true
 
 For the whole rules list, please see [Rules page](https://github.com/yaniswang/HTMLHint/wiki/Rules).
 
