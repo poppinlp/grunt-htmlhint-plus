@@ -73,7 +73,7 @@ Throw fatal fail or not at the end of this task, when there is hint error. Defau
 
 Only hint changed file and new file. Default `true`.
 
-### ignore {Object}
+### options.ignore {Object}
 
 Ignore strings between key and value from this object. Default `{}`.
 
