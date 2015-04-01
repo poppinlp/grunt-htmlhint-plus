@@ -4,7 +4,7 @@
 [![Dependency Status](https://david-dm.org/poppinlp/grunt-htmlhint-plus.svg)](https://david-dm.org/poppinlp/grunt-htmlhint-plus)
 [![devDependency Status](https://david-dm.org/poppinlp/grunt-htmlhint-plus/dev-status.svg)](https://david-dm.org/poppinlp/grunt-htmlhint-plus#info=devDependencies)
 
-Grunt task to hint html code. Support template.
+Grunt task to hint html code.
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ Task targets, files and options may be specified according to the grunt [Configu
 
 Source path. Support file path, glob and globs.
 
-### rules {Object}
+### options.rules {Object}
 
 Htmlhint rules. Default is:
 
@@ -61,25 +61,21 @@ Htmlhint rules. Default is:
 
 For the whole rules list, please see [Rules page](https://github.com/yaniswang/HTMLHint/wiki/Rules).
 
-### htmlhintrc {String}
+### options.htmlhintrc {String}
 
 Htmlhintrc file path. Has higher priority than `rules` option.
 
-### force {Boolean}
+### options.force {Boolean}
 
-Throw fatal fail or not at the end of this task, when there is hint error. Default `false`. Only work in global options.
+Throw fatal fail or not at the end of this task, when there is hint error. Default `false`.
 
-### newer {Boolean}
+### options.newer {Boolean}
 
-Only hint changed file and new file. Default `true`. Only work in global options.
-
-### filter {Object}
-
-The options for glob in `files.src`. Please see [options page](https://github.com/isaacs/minimatch#options) for more detail.
+Only hint changed file and new file. Default `true`.
 
 ### ignore {Object}
 
-Ignore strings between key and value from this object. Default `{}`. Only work in task options.
+Ignore strings between key and value from this object. Default `{}`.
 
 ## Usage Examples
 
@@ -88,12 +84,13 @@ Ignore strings between key and value from this object. Default `{}`. Only work i
 ```js
 // Project configuration
 htmlhintplus: {
-    html1: {
-        rules: {
-            'tag-pair': true
-        },
-        django: false,
-        src: ['path/to/file']
+    build: {
+        options: {
+            rules: {
+                'tag-pair': true
+            }
+        }
+        src: 'path/to/file'
     }
 }
 ```
@@ -104,8 +101,13 @@ htmlhintplus: {
 // Project configuration
 htmlhintplus: {
     html: {
-        src: ['path/to/file'],
-        htmlhintrc: 'path/to/file'
+        options: {
+            htmlhintrc: 'path/to/file'
+        }
+        src: [
+            'path/to/file',
+            'path/to/file2'
+        ]
     }
 }
 ```
@@ -114,29 +116,19 @@ htmlhintplus: {
 
 ```js
 // Project configuration
-jsmerge: {
+htmlhintplus: {
     options: {
-        htmlhintrc: 'path/to/file'
+        htmlhintrc: 'path/to/file',
+        newer: true
     },
-    html: {
-        src: ['path/to/file']
-    }
-}
-```
-
-### Use glob and filter
-
-```js
-// Project configuration
-jsmerge: {
-    options: {
-        htmlhintrc: 'path/to/file'
-    },
-    html: {
-        src: ['**/*.html'],
-        filter: {
-            cwd: 'path/to/'
-        }
+    build: {
+        options: {
+            force: false
+        },
+        src: [
+            'path/1/*.html',
+            'path/2/**/*.html'
+        ]
     }
 }
 ```
@@ -151,6 +143,9 @@ grunt test
 
 ## History
 
+- Ver 0.1.0
+    - Use [file-changed](https://github.com/poppinlp/file-changed) to do newer job
+    - Reconstruct whole project, make it easy to use
 - Ver 0.0.7 Remove `django` option; Add `ignore` option to support it and more; Fix some bugs; Add default rules
 - Ver 0.0.6 Update `dir2pattern` to 0.0.4
 - Ver 0.0.5 Bugfix
@@ -164,3 +159,4 @@ grunt test
     - Support path filter
 - Ver 0.0.2 Fix global options not work
 - Ver 0.0.1 Main
+

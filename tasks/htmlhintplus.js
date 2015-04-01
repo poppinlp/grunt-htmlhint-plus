@@ -9,13 +9,12 @@
 'use strict';
 
 module.exports = function(grunt) {
-    grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint. Support template.', function () {
+    grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
             fixPattern = require('dir2pattern'),
             fs = require('fs'),
-            nodePath = require('path'),
-            config = grunt.config.get('htmlhintplus'),
-            ln = grunt.util.linefeed,
+            path = require('path'),
+            fc = require('file-changed'),
             defaultRules = {
                 "tagname-lowercase": true,
                 "attr-lowercase": true,
@@ -38,103 +37,54 @@ module.exports = function(grunt) {
                 "href-abs-or-rel": true,
                 "attr-unsafe-chars": true
             },
-            cwd = __dirname + nodePath.sep + '..' + nodePath.sep,
-            timestampPath = cwd + 'config' + nodePath.sep + 'timestamp.json',
-            timestamp = {},
-            defaultTimestamp = {},
-            globalOptions = extend({
-                    force: false,
-                    newer: true
-                }, config.options || {}
-            ),
-            encoding = { encoding: 'utf8' },
-            hasHint = false,
-            task;
+            options = this.options(),
+            hasError = false;
 
-        // read timestamp
-        if (globalOptions.newer) {
-            try {
-                timestamp = grunt.file.readJSON(timestampPath, encoding);
-            } catch (err) {
-                timestamp = defaultTimestamp;
-            }
-        }
+        this.files.map(function (files) {
+            files.src.map(function (file) {
+                if (options.newer && fc.addFile(file).check(file).length === 0) return;
 
-        for (task in config) {
-            if (task !== 'options' && config.hasOwnProperty(task)) {
-                doTask(config[task]);
-            }
-        }
+                var text = grunt.file.read(file),
+                    rules = defaultRules,
+                    key,
+                    reg,
+                    result;
 
-        if (globalOptions.newer) {
-            grunt.file.write(timestampPath, JSON.stringify(timestamp), encoding);
-        }
-
-        if (!globalOptions.force && hasHint) {
-            grunt.fail.fatal('Can\'t pass htmlhint. Set force option to continue.');
-        }
-
-        function doTask (task) {
-            var text, list, len, lastChange, src, key, reg;
-
-            // 读规则
-            if (task.htmlhintrc) {
-                task.rules = grunt.file.readJSON(task.htmlhintrc);
-            } else if (globalOptions.htmlhintrc) {
-                task.rules = grunt.file.readJSON(globalOptions.htmlhintrc);
-            } else if (!task.rules) {
-                task.rules = defaultRules;
-            }
-
-            // 适配字符串或者数组
-            len = task.src.length;
-            if (len) {
-                while (len--) {
-                    task.src[len] = fixPattern(task.src[len]);
-                }
-            } else {
-                task.src = fixPattern(task.src);
-            }
-
-            // 进行检测
-            list = grunt.file.expand(task.filter || {}, task.src);
-            if (!timestamp[task]) timestamp[task] = {};
-            len = list.length;
-            while (len--) {
-                src = nodePath.normalize((task.filter ? (task.filter.cwd || '.') : '.') + nodePath.sep + list[len]);
-                lastChange = fs.statSync(src).mtime.getTime();
-                if (globalOptions.newer && timestamp[task][src] && timestamp[task][src] === lastChange) continue;
-
-                text = grunt.file.read(src, encoding);
-                if (task.ignore) {
-                    for (key in task.ignore) {
-                        if (task.ignore.hasOwnProperty(key)) {
-                            reg = new RegExp(key + '.*?' + task.ignore[key], 'ig');
-                            text = text.replace(reg, '');
+                if (options.ignore) {
+                    for (key in options.ignore) {
+                        if (options.ignore.hasOwnProperty(key)) {
+                            reg = new RegExp(key + '.*?' + options.ignore[key], 'ig');
+                            text = text.replace(reg, 'x');
                         }
                     }
                 }
-                text = HTMLHint.verify(text, task.rules);
-                if (text.length > 0) {
-                    hasHint = true;
-                    grunt.log.errorlns('HtmlHintPlus: ' + text.length + ' warnings in ' + src + '...');
-                    text.forEach(function (message) {
-                        grunt.log.writeln( "[".red + ( "L" + message.line ).yellow + ":".red + ( "C" + message.col ).yellow + "]".red + ' ' + message.message.yellow );
+
+                if (options.htmlhintrc) {
+                    rules = grunt.file.readJSON(options.htmlhintrc);
+                } else if (options.rules) {
+                    rules = options.rules;
+                }
+
+                result = HTMLHint.verify(text, rules);
+                if (result.length > 0) {
+                    hasError = true;
+                    grunt.log.errorlns('HtmlHintPlus: ' + result.length + ' warnings in ' + file + '...');
+                    result.forEach(function (msg) {
+                        grunt.log.writeln( "[".red + ( "L" + msg.line ).yellow + ":".red + ( "C" + msg.col ).yellow + "]".red + ' ' + msg.message.yellow );
                     });
                 } else {
-                    grunt.log.ok('HtmlHintPuls: ' + src + ' hint well...');
-                    timestamp[task][src] = lastChange;
+                    if (options.newer) {
+                        fc.addFile(file).update(file);
+                    }
+                    grunt.log.ok('HtmlHintPuls: ' + file + ' hint well...');
                 }
-            }
-        }
+            });
+        });
 
-        function extend (self, other) {
-            for (var key in other) {
-                if (other.hasOwnProperty(key)) {
-                    self[key] = other[key];
-                }
-            }
-            return self;
+        fc.save();
+
+        if (options.force && hasError) {
+            grunt.fail.fatal('Can\'t pass htmlhint. Set \'force\' option to continue.');
         }
     });
 };

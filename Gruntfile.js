@@ -1,15 +1,17 @@
 module.exports = function(grunt) {
     grunt.config.init({
         htmlhintplus: {
+            options: {
+                force: false,
+                newer: false
+            },
             dist: {
-                src: ['*.html'],
-                ignore: {
-                    '{%': '%}',
-                    '{{': '}}'
+                options: {
+                    ignore: {
+                        '{{': '}}'
+                    }
                 },
-                filter: {
-                    cwd: 'test'
-                }
+                src: ['test/*.html']
             }
         }
     });
