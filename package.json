@@ -18,7 +18,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "keywords": [
     "gruntplugin",
@@ -31,11 +31,13 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "dir2pattern": ">=0.0.4",
     "file-changed": "^0.1.0",
     "htmlhint": ">=0.9.7"
   },
   "devDependencies": {
     "grunt": ">=0.4.0"
-  }
+  },
+  "files": [
+    "tasks"
+  ]
 }
