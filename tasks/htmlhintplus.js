@@ -11,9 +11,6 @@
 module.exports = function(grunt) {
     grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
-            fixPattern = require('dir2pattern'),
-            fs = require('fs'),
-            path = require('path'),
             fc = require('file-changed'),
             defaultRules = {
                 "tagname-lowercase": true,

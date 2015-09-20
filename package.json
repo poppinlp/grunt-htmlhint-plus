@@ -31,7 +31,6 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "dir2pattern": ">=0.0.4",
     "file-changed": "^0.1.0",
     "htmlhint": ">=0.9.7"
   },
