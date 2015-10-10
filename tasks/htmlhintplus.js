@@ -73,7 +73,7 @@ module.exports = function(grunt) {
                     if (options.newer) {
                         fc.addFile(file).update(file);
                     }
-                    grunt.log.ok('HtmlHintPuls: ' + file + ' hint well...');
+                    grunt.log.ok('HtmlHintPlus: ' + file + ' hint well...');
                 }
             });
         });
