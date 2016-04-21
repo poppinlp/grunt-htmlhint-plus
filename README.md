@@ -77,6 +77,10 @@ Only hint changed file and new file. Default `true`.
 
 Ignore strings between key and value from this object. Default `{}`.
 
+### options.customRules {Array}
+
+An array of paths to custom rule files to load and use in your HTMLHinting. See [issue #47](https://github.com/yaniswang/HTMLHint/issues/47) on the [HTMLHint project](https://github.com/yaniswang/HTMLHint). For examples of how to write a custom rule.
+
 ## Usage Examples
 
 ### Basic
@@ -87,8 +91,12 @@ htmlhintplus: {
     build: {
         options: {
             rules: {
-                'tag-pair': true
-            }
+                'tag-pair': true,
+                'custom-rule': true
+            },
+            customRules: [
+                'rules/custom-rule.js'
+            ]
         }
         src: 'path/to/file'
     }
@@ -143,6 +151,7 @@ grunt test
 
 ## History
 
+- Ver 0.2.0 Adds the option to load custom HTMLHint rules
 - Ver 0.1.0
     - Use [file-changed](https://github.com/poppinlp/file-changed) to do newer job
     - Reconstruct whole project, make it easy to use
@@ -159,4 +168,3 @@ grunt test
     - Support path filter
 - Ver 0.0.2 Fix global options not work
 - Ver 0.0.1 Main
-
