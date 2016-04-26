@@ -35,7 +35,29 @@ module.exports = function(grunt) {
                 "attr-unsafe-chars": true
             },
             options = this.options(),
-            hasError = false;
+            hasError = false,
+            customRules = [];
+
+        if (options.hasOwnProperty('customRules') && typeof options.customRules == 'object') {
+            customRules = options.customRules;
+        }
+
+        // load custom rules
+        if (customRules.length) {
+            for (var i = 0, len = customRules.length; i < len; i++) {
+                var customRule = require(process.env.PWD + '/' + customRules[i]);
+                if (
+                  typeof customRule == 'object' &&
+                  customRule.hasOwnProperty('id') &&
+                  customRule.hasOwnProperty('description') &&
+                  customRule.hasOwnProperty('init')
+                ) {
+                    HTMLHint.addRule(customRule);
+                } else {
+                    console.error("[error]".red.bold, customRules[i].bold, "was invalid and could not be loaded.".red);
+                }
+            }
+        }
 
         this.files.map(function (files) {
             files.src.map(function (file) {
