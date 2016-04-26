@@ -12,6 +12,18 @@ module.exports = function(grunt) {
                     }
                 },
                 src: ['test/*.html']
+            },
+            custom: {
+                options: {
+                    customRules: [
+                        'rules/foobar-exists.js',
+                        'rules/bad-rule.js'
+                    ],
+                    rules: {
+                        "foobar-exists": true // custom rule that is loaded above
+                    }
+                },
+                src: ['test/*.html']
             }
         }
     });
