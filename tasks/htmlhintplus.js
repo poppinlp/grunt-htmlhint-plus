@@ -12,6 +12,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
             fc = require('file-changed'),
+            _ = require('lodash'),
             checkstyleFormatter = require('checkstyle-formatter'),
             defaultRules = {
                 "tagname-lowercase": true,
@@ -37,7 +38,8 @@ module.exports = function(grunt) {
             },
             options = this.options(),
             hasError = false,
-            customRules = [];
+            customRules = [],
+            reducedResults = [];
 
         if (options.hasOwnProperty('customRules') && typeof options.customRules == 'object') {
             customRules = options.customRules;
@@ -98,6 +100,19 @@ module.exports = function(grunt) {
                     }
                     grunt.log.ok('HtmlHintPlus: ' + file + ' hint well...');
                 }
+
+                // update the reduced results collection with this file's info
+                reducedResults.push({
+                    filename: file,
+                    messages: _.map(result, function(message) {
+                        return {
+                            line: message.line,
+                            column: message.col,
+                            severity: message.type,
+                            message: message.message
+                        };
+                    })
+                });
             });
         });
 

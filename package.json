@@ -33,7 +33,8 @@
   "dependencies": {
     "checkstyle-formatter": "^1.0.0",
     "file-changed": "^0.1.0",
-    "htmlhint": ">=0.9.7"
+    "htmlhint": ">=0.9.7",
+    "lodash": "^4.11.1"
   },
   "devDependencies": {
     "grunt": ">=0.4.0"
