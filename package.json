@@ -31,6 +31,7 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "checkstyle-formatter": "^1.0.0",
     "file-changed": "^0.1.0",
     "htmlhint": ">=0.9.7"
   },

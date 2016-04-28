@@ -12,6 +12,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
             fc = require('file-changed'),
+            checkstyleFormatter = require('checkstyle-formatter'),
             defaultRules = {
                 "tagname-lowercase": true,
                 "attr-lowercase": true,
