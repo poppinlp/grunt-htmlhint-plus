@@ -1,0 +1,1 @@
+[{"filename":"test/index.html","messages":[{"line":2,"column":6,"severity":"warning","message":"data-foobar of html tag must be present.","rule":"foobar-exists: Checks that the data-foobar attribute exists on the html element"}]},{"filename":"test/index2.html","messages":[]}]

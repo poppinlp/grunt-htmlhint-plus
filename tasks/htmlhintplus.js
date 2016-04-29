@@ -13,6 +13,8 @@ module.exports = function(grunt) {
         var HTMLHint = require("htmlhint").HTMLHint,
             fc = require('file-changed'),
             _ = require('lodash'),
+            checkstyleFormatter = require('checkstyle-formatter'),
+            fs = require('fs'),
             defaultRules = {
                 "tagname-lowercase": true,
                 "attr-lowercase": true,
@@ -38,7 +40,13 @@ module.exports = function(grunt) {
             options = this.options(),
             hasError = false,
             customRules = [],
-            extendRules = options.extendRules || false;
+            reducedResults = [],
+            extendRules = options.extendRules || false,
+            outputTypes = options.output ? options.output.split('|') : [ 'console' ];
+
+        outputTypes = _.map(outputTypes, function(type) {
+            return type.toString().toLowerCase();
+        });
 
         if (options.hasOwnProperty('customRules') && typeof options.customRules == 'object') {
             customRules = options.customRules;
@@ -91,7 +99,7 @@ module.exports = function(grunt) {
                 }
 
                 result = HTMLHint.verify(text, rules);
-                if (result.length > 0) {
+                if ((result.length > 0) && (_.includes(outputTypes, 'default') || _.includes(outputTypes, 'console'))) {
                     hasError = true;
                     grunt.log.errorlns('HtmlHintPlus: ' + result.length + ' warnings in ' + file + '...');
                     result.forEach(function (msg) {
@@ -103,10 +111,77 @@ module.exports = function(grunt) {
                     }
                     grunt.log.ok('HtmlHintPlus: ' + file + ' hint well...');
                 }
+
+                // update the reduced results collection with this file's info
+                if (_.includes(outputTypes, 'checkstyle') || _.includes(outputTypes, 'json') || _.includes(outputTypes, 'text')) {
+                    reducedResults.push({
+                        filename: file,
+                        messages: _.map(result, function(message) {
+                            return {
+                                line: message.line,
+                                column: message.col,
+                                severity: message.type,
+                                message: message.message,
+                                rule: message.rule.id + ': ' + message.rule.description
+                            };
+                        })
+                    });
+                }
             });
         });
 
         fc.save();
+
+        // make sure that the htmlhint directory exists
+        if (_.includes(outputTypes, 'checkstyle') || _.includes(outputTypes, 'json')) {
+            try {
+                fs.accessSync(process.cwd() + '/htmlhint-report');
+            } catch(e) {
+                fs.mkdirSync(process.cwd() + '/htmlhint-report');
+            }
+        }
+
+        // write out the checkstyle file
+        if (_.includes(outputTypes, 'checkstyle')) {
+            try {
+                fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.xml');
+            } catch(e) {}
+            try {
+                fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.xml', checkstyleFormatter(reducedResults));
+            } catch(e) {
+                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.xml".white.bold);
+            }
+        }
+
+        if (_.includes(outputTypes, 'json')) {
+            try {
+                fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.json');
+            } catch(e) {}
+            try {
+                fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.json', JSON.stringify(reducedResults));
+            } catch(e) {
+                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.json".white.bold);
+            }
+        }
+
+        if (_.includes(outputTypes, 'text')) {
+            try {
+                fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.txt');
+            } catch(e) {}
+            try {
+                var textResults = [];
+                for (var i = 0, len = reducedResults.length; i < len; i++) {
+                    textResults.push('HtmlHintPlus: ' + reducedResults[i].messages.length + ' warnings in ' + reducedResults[i].filename + '...');
+                    textResults.push(_.map(reducedResults[i].messages, function(message) {
+                        return "[" + ( "L" + message.line ) + ":" + ( "C" + message.column ) + "]" + ' ' + message.message;
+                    }));
+                }
+                textResults = _.flatten(textResults);
+                fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.txt', textResults.join('\n'));
+            } catch(e) {
+                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.txt".white.bold);
+            }
+        }
 
         if (options.force && hasError) {
             grunt.fail.fatal('Can\'t pass htmlhint. Set \'force\' option to continue.');

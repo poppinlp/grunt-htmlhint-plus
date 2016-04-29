@@ -1,6 +1,6 @@
 {
   "name": "grunt-htmlhint-plus",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Grunt task to hint html code.",
   "main": "tasks/htmlhintplus.js",
   "repository": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 0.12.0"
   },
   "keywords": [
     "gruntplugin",
@@ -31,6 +31,7 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "checkstyle-formatter": "^1.0.0",
     "file-changed": "^0.1.0",
     "htmlhint": ">=0.9.7",
     "lodash": "^4.11.1"

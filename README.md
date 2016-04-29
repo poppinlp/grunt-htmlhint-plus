@@ -85,6 +85,10 @@ An array of paths to custom rule files to load and use in your HTMLHinting. See 
 
 Extend the default rules instead of only running the rules specified. Default `false`.
 
+### options.output {String|Array}
+
+A string or array of output file types for reporting. Multiple types can also be selected separating them with a pipe character (ex: `console|checkstyle|json`). Available output types include `console`, `default` (alias for console), `text`, `json`, and `checkstyle`. Default `console`.
+
 ## Usage Examples
 
 ### Basic
@@ -101,7 +105,8 @@ htmlhintplus: {
             customRules: [
                 'rules/custom-rule.js'
             ],
-            extendRules: true
+            extendRules: true,
+            output: [ 'console', 'text', 'json', 'checkstyle' ]
         }
         src: 'path/to/file'
     }
@@ -156,6 +161,7 @@ grunt test
 
 ## History
 
+- Ver 0.4.0 Adds the option to output the error reports to files
 - Ver 0.3.0 Adds the option to extend the default rules instead of overriding them
 - Ver 0.2.0 Adds the option to load custom HTMLHint rules
 - Ver 0.1.0

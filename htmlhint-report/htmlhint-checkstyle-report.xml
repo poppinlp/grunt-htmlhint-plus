@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="4.3">
+<file name="test/index.html">
+<error line="2" column="6" severity="warning" message="data-foobar of html tag must be present." />
+</file>
+<file name="test/index2.html">
+
+</file>
+</checkstyle>
