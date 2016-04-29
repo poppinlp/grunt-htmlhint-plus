@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                         '{{': '}}'
                     }
                 },
-                src: ['test/*.html']
+                src: [ 'test/*.html' ]
             },
             custom: {
                 options: {
@@ -23,7 +23,18 @@ module.exports = function(grunt) {
                         "foobar-exists": true // custom rule that is loaded above
                     }
                 },
-                src: ['test/*.html']
+                src: [ 'test/*.html' ]
+            },
+            extendRules: {
+                options: {
+                    rules: {
+                        "doctype-first": false,
+                        "tag-pair": false,
+                        "tag-self-close": true,
+                        "spec-char-escape": false
+                    }
+                },
+                src: [ 'test/*.html' ]
             }
         }
     });
