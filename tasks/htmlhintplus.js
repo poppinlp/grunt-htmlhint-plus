@@ -41,6 +41,7 @@ module.exports = function(grunt) {
             hasError = false,
             customRules = [],
             reducedResults = [],
+            extendRules = options.extendRules || false,
             outputTypes = options.output ? options.output.split('|') : [ 'console' ];
 
         outputTypes = _.map(outputTypes, function(type) {
@@ -90,7 +91,11 @@ module.exports = function(grunt) {
                 if (options.htmlhintrc) {
                     rules = grunt.file.readJSON(options.htmlhintrc);
                 } else if (options.rules) {
-                    rules = options.rules;
+                    if (extendRules) {
+                        rules = _.extend(defaultRules, options.rules);
+                    } else {
+                        rules = options.rules;
+                    }
                 }
 
                 result = HTMLHint.verify(text, rules);

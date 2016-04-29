@@ -81,6 +81,10 @@ Ignore strings between key and value from this object. Default `{}`.
 
 An array of paths to custom rule files to load and use in your HTMLHinting. See [issue #47](https://github.com/yaniswang/HTMLHint/issues/47) on the [HTMLHint project](https://github.com/yaniswang/HTMLHint). For examples of how to write a custom rule.
 
+### options.extendRules {Boolean}
+
+Extend the default rules instead of only running the rules specified. Default `false`.
+
 ### options.output {String|Array}
 
 A string or array of output file types for reporting. Multiple types can also be selected separating them with a pipe character (ex: `console|checkstyle|json`). Available output types include `console`, `default` (alias for console), `text`, `json`, and `checkstyle`. Default `console`.
@@ -100,7 +104,9 @@ htmlhintplus: {
             },
             customRules: [
                 'rules/custom-rule.js'
-            ]
+            ],
+            extendRules: true,
+            output: [ 'console', 'text', 'json', 'checkstyle' ]
         }
         src: 'path/to/file'
     }
@@ -155,6 +161,8 @@ grunt test
 
 ## History
 
+- Ver 0.4.0 Adds the option to output the error reports to files
+- Ver 0.3.0 Adds the option to extend the default rules instead of overriding them
 - Ver 0.2.0 Adds the option to load custom HTMLHint rules
 - Ver 0.1.0
     - Use [file-changed](https://github.com/poppinlp/file-changed) to do newer job
