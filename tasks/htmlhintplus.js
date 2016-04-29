@@ -130,26 +130,33 @@ module.exports = function(grunt) {
         // make sure that the htmlhint directory exists
         if (_.includes(outputTypes, 'checkstyle') || _.includes(outputTypes, 'json')) {
             try {
-                fs.accessSync(process.cwd() + '/htmlhint');
+                fs.accessSync(process.cwd() + '/htmlhint-report');
             } catch(e) {
-                fs.mkdirSync(process.cwd() + '/htmlhint');
+                fs.mkdirSync(process.cwd() + '/htmlhint-report');
             }
         }
 
         // write out the checkstyle file
         if (_.includes(outputTypes, 'checkstyle')) {
             try {
-                fs.unlinkSync(process.cwd() + '/htmlhint/htmlhint-checkstyle.xml');
+                fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.xml');
             } catch(e) {}
             try {
-                fs.writeFileSync(process.cwd() + '/htmlhint/htmlhint-checkstyle.xml', checkstyleFormatter(reducedResults));
+                fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.xml', checkstyleFormatter(reducedResults));
             } catch(e) {
-                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle.xml".white.bold);
+                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.xml".white.bold);
             }
         }
 
         if (_.includes(outputTypes, 'json')) {
-
+            try {
+                fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.json');
+            } catch(e) {}
+            try {
+                fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.json', JSON.stringify(reducedResults));
+            } catch(e) {
+                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.json".white.bold);
+            }
         }
 
         if (options.force && hasError) {
