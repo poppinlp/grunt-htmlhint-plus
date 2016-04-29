@@ -12,6 +12,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint.', function () {
         var HTMLHint = require("htmlhint").HTMLHint,
             fc = require('file-changed'),
+            _ = require('lodash'),
             defaultRules = {
                 "tagname-lowercase": true,
                 "attr-lowercase": true,
@@ -36,7 +37,8 @@ module.exports = function(grunt) {
             },
             options = this.options(),
             hasError = false,
-            customRules = [];
+            customRules = [],
+            extendRules = options.extendRules || false;
 
         if (options.hasOwnProperty('customRules') && typeof options.customRules == 'object') {
             customRules = options.customRules;
@@ -81,7 +83,11 @@ module.exports = function(grunt) {
                 if (options.htmlhintrc) {
                     rules = grunt.file.readJSON(options.htmlhintrc);
                 } else if (options.rules) {
-                    rules = options.rules;
+                    if (extendRules) {
+                        rules = _.extend(defaultRules, options.rules);
+                    } else {
+                        rules = options.rules;
+                    }
                 }
 
                 result = HTMLHint.verify(text, rules);
