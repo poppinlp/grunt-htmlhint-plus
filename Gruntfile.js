@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                     rules: {
                         "foobar-exists": true // custom rule that is loaded above
                     },
-                    output: 'console|checkstyle|json'
+                    output: 'console|checkstyle|json|text'
                 },
                 src: ['test/*.html']
             }

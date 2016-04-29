@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                 }
 
                 // update the reduced results collection with this file's info
-                if (_.includes(outputTypes, 'checkstyle') || _.includes(outputTypes, 'json')) {
+                if (_.includes(outputTypes, 'checkstyle') || _.includes(outputTypes, 'json') || _.includes(outputTypes, 'text')) {
                     reducedResults.push({
                         filename: file,
                         messages: _.map(result, function(message) {
@@ -156,6 +156,25 @@ module.exports = function(grunt) {
                 fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.json', JSON.stringify(reducedResults));
             } catch(e) {
                 grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.json".white.bold);
+            }
+        }
+
+        if (_.includes(outputTypes, 'text')) {
+            try {
+                fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.txt');
+            } catch(e) {}
+            try {
+                var textResults = [];
+                for (var i = 0, len = reducedResults.length; i < len; i++) {
+                    textResults.push('HtmlHintPlus: ' + reducedResults[i].messages.length + ' warnings in ' + reducedResults[i].filename + '...');
+                    textResults.push(_.map(reducedResults[i].messages, function(message) {
+                        return "[" + ( "L" + message.line ) + ":" + ( "C" + message.column ) + "]" + ' ' + message.message;
+                    }));
+                }
+                textResults = _.flatten(textResults);
+                fs.writeFileSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.txt', textResults.join('\n'));
+            } catch(e) {
+                grunt.log.writeln("Unable to write ".red + "htmlhint-checkstyle-report.txt".white.bold);
             }
         }
 
