@@ -41,7 +41,7 @@ module.exports = function(grunt) {
             hasError = false,
             customRules = [],
             reducedResults = [],
-            outputTypes = options.output ? options.output.split('|') : [ 'default' ];
+            outputTypes = options.output ? options.output.split('|') : [ 'console' ];
 
         outputTypes = _.map(outputTypes, function(type) {
             return type.toString().toLowerCase();

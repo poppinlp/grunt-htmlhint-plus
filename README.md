@@ -81,6 +81,10 @@ Ignore strings between key and value from this object. Default `{}`.
 
 An array of paths to custom rule files to load and use in your HTMLHinting. See [issue #47](https://github.com/yaniswang/HTMLHint/issues/47) on the [HTMLHint project](https://github.com/yaniswang/HTMLHint). For examples of how to write a custom rule.
 
+### options.output {String|Array}
+
+A string or array of output file types for reporting. Multiple types can also be selected separating them with a pipe character (ex: `console|checkstyle|json`). Available output types include `console`, `default` (alias for console), `text`, `json`, and `checkstyle`. Default `console`.
+
 ## Usage Examples
 
 ### Basic
