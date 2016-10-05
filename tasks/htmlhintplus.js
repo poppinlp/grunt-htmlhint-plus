@@ -42,7 +42,7 @@ module.exports = function(grunt) {
             customRules = [],
             reducedResults = [],
             extendRules = options.extendRules || false,
-            outputTypes = options.output ? options.output.split('|') : [ 'console' ];
+            outputTypes = options.output ? (_.isArray(options.output) ? options.output : options.output.split('|')) : [ 'console' ];
 
         outputTypes = _.map(outputTypes, function(type) {
             return type.toString().toLowerCase();

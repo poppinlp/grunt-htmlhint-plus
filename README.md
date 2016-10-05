@@ -161,6 +161,7 @@ grunt test
 
 ## History
 
+- Ver 0.4.1 Bugfix for [issue](https://github.com/poppinlp/grunt-htmlhint-plus/issues/12)
 - Ver 0.4.0 Adds the option to output the error reports to files
 - Ver 0.3.0 Adds the option to extend the default rules instead of overriding them
 - Ver 0.2.0 Adds the option to load custom HTMLHint rules
