@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         // load custom rules
         if (customRules.length) {
             for (var i = 0, len = customRules.length; i < len; i++) {
-                var customRule = require(process.env.PWD + '/' + customRules[i]);
+                var customRule = require(process.cwd() + '/' + customRules[i]);
                 if (
                   typeof customRule == 'object' &&
                   customRule.hasOwnProperty('id') &&
