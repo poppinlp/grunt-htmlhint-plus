@@ -109,7 +109,7 @@ module.exports = function(grunt) {
                     if (options.newer) {
                         fc.addFile(file).update(file);
                     }
-                    grunt.log.ok('HtmlHintPlus: ' + file + ' hint well...');
+                    grunt.verbose.ok('HtmlHintPlus: ' + file + ' hint well...');
                 }
 
                 // update the reduced results collection with this file's info
