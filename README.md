@@ -161,6 +161,7 @@ grunt test
 
 ## History
 
+- Ver 0.4.3 Changes the default for logging to not include successful files; moves success to verbose
 - Ver 0.4.2 Merge [PR](https://github.com/poppinlp/grunt-htmlhint-plus/pull/15)
 - Ver 0.4.1 Bugfix for [issue](https://github.com/poppinlp/grunt-htmlhint-plus/issues/12)
 - Ver 0.4.0 Adds the option to output the error reports to files
