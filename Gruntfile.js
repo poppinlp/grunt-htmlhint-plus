@@ -13,6 +13,17 @@ module.exports = function(grunt) {
                 },
                 src: [ 'test/*.html' ]
             },
+            customAsFunction: {
+                options: {
+                    customRules: [
+                        'rules/foobar-exists-as-function'
+                    ],
+                    rules: {
+                        'foobar-exists-as-function': true
+                    }
+                },
+                src: [ 'test/*.html' ]
+            },
             custom: {
                 options: {
                     customRules: [
