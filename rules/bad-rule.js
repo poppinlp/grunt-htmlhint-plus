@@ -1,3 +1,3 @@
-module.exports = function() {
+module.exports = {
   // this won't work
 }

@@ -56,7 +56,9 @@ module.exports = function(grunt) {
         if (customRules.length) {
             for (var i = 0, len = customRules.length; i < len; i++) {
                 var customRule = require(process.cwd() + '/' + customRules[i]);
-                if (
+                if (typeof customRule == 'function') {
+                    customRule(HTMLHint);
+                } else if (
                   typeof customRule == 'object' &&
                   customRule.hasOwnProperty('id') &&
                   customRule.hasOwnProperty('description') &&
