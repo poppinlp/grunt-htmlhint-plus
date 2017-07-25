@@ -128,7 +128,7 @@ module.exports = function (grunt) {
 
 		fc.save();
 
-		// make sure that the htmlhint directory exists
+		// Make sure that the htmlhint directory exists
 		if (_.includes(outputTypes, 'checkstyle') || _.includes(outputTypes, 'json')) {
 			try {
 				fs.accessSync(process.cwd() + '/htmlhint-report');
@@ -137,7 +137,7 @@ module.exports = function (grunt) {
 			}
 		}
 
-		// write out the checkstyle file
+		// Write the checkstyle file
 		if (_.includes(outputTypes, 'checkstyle')) {
 			try {
 				fs.unlinkSync(process.cwd() + '/htmlhint-report/htmlhint-checkstyle-report.xml');
