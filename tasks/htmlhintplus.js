@@ -2,11 +2,12 @@
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('htmlhintplus', 'Validate html files with htmlhint.', function () {
-		var HTMLHint = require("htmlhint").HTMLHint,
-			fc = require('file-changed'),
+		let
+			fs = require('fs'),
+			HTMLHint = require("htmlhint").HTMLHint,
+			Fc = require('file-changed'),
 			_ = require('lodash'),
 			checkstyleFormatter = require('checkstyle-formatter'),
-			fs = require('fs'),
 			defaultRules = {
 				"tagname-lowercase": true,
 				"attr-lowercase": true,
@@ -34,7 +35,8 @@ module.exports = function (grunt) {
 			customRules = [],
 			reducedResults = [],
 			extendRules = options.extendRules || false,
-			outputTypes = options.output ? (_.isArray(options.output) ? options.output : options.output.split('|')) : ['console'];
+			outputTypes = options.output ? (_.isArray(options.output) ? options.output : options.output.split('|')) : ['console'],
+			fc = new Fc();
 
 		outputTypes = _.map(outputTypes, function (type) {
 			return type.toString().toLowerCase();
