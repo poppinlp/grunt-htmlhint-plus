@@ -1,8 +1,13 @@
 # Grunt-htmlhint-plus
 
-[![Build Status](https://travis-ci.org/poppinlp/grunt-htmlhint-plus.png?branch=master)](https://travis-ci.org/poppinlp/grunt-htmlhint-plus)
-[![Dependency Status](https://david-dm.org/poppinlp/grunt-htmlhint-plus.svg)](https://david-dm.org/poppinlp/grunt-htmlhint-plus)
-[![devDependency Status](https://david-dm.org/poppinlp/grunt-htmlhint-plus/dev-status.svg)](https://david-dm.org/poppinlp/grunt-htmlhint-plus#info=devDependencies)
+[![Build Status][ci-img]][ci-url]
+[![Code GPA][gpa-img]][gpa-url]
+[![Code style][lint-img]][lint-url]
+[![Dependency Status][dep-img]][dep-url]
+[![Dev Dependency Status][dev-dep-img]][dev-dep-url]
+[![NPM version][npm-ver-img]][npm-url]
+[![NPM downloads][npm-dl-img]][npm-url]
+[![NPM license][npm-lc-img]][npm-url]
 
 Grunt task to hint html code.
 
@@ -14,6 +19,12 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 
 ```shell
 npm install grunt-htmlhint-plus --save-dev
+```
+
+Or you may like yarn:
+
+```shell
+yarn add grunt-htmlhint-plus -D
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -96,20 +107,20 @@ A string or array of output file types for reporting. Multiple types can also be
 ```js
 // Project configuration
 htmlhintplus: {
-    build: {
-        options: {
-            rules: {
-                'tag-pair': true,
-                'custom-rule': true
-            },
-            customRules: [
-                'rules/custom-rule.js'
-            ],
-            extendRules: true,
-            output: [ 'console', 'text', 'json', 'checkstyle' ]
-        }
-        src: 'path/to/file'
-    }
+	build: {
+		options: {
+			rules: {
+				'tag-pair': true,
+				'custom-rule': true
+			},
+			customRules: [
+				'rules/custom-rule.js'
+			],
+			extendRules: true,
+			output: [ 'console', 'text', 'json', 'checkstyle' ]
+		}
+		src: 'path/to/file'
+	}
 }
 ```
 
@@ -118,15 +129,15 @@ htmlhintplus: {
 ```js
 // Project configuration
 htmlhintplus: {
-    html: {
-        options: {
-            htmlhintrc: 'path/to/file'
-        }
-        src: [
-            'path/to/file',
-            'path/to/file2'
-        ]
-    }
+	html: {
+		options: {
+			htmlhintrc: 'path/to/file'
+		}
+		src: [
+			'path/to/file',
+			'path/to/file2'
+		]
+	}
 }
 ```
 
@@ -135,19 +146,19 @@ htmlhintplus: {
 ```js
 // Project configuration
 htmlhintplus: {
-    options: {
-        htmlhintrc: 'path/to/file',
-        newer: true
-    },
-    build: {
-        options: {
-            force: false
-        },
-        src: [
-            'path/1/*.html',
-            'path/2/**/*.html'
-        ]
-    }
+	options: {
+		htmlhintrc: 'path/to/file',
+		newer: true
+	},
+	build: {
+		options: {
+			force: false
+		},
+		src: [
+			'path/1/*.html',
+			'path/2/**/*.html'
+		]
+	}
 }
 ```
 
@@ -159,27 +170,22 @@ Run the test demo:
 grunt test
 ```
 
-## History
+[ci-img]:https://img.shields.io/travis/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
+[ci-url]:https://travis-ci.org/poppinlp/grunt-htmlhint-plus
 
-- Ver 0.4.3 Changes the default for logging to not include successful files; moves success to verbose
-- Ver 0.4.2 Merge [PR](https://github.com/poppinlp/grunt-htmlhint-plus/pull/15)
-- Ver 0.4.1 Bugfix for [issue](https://github.com/poppinlp/grunt-htmlhint-plus/issues/12)
-- Ver 0.4.0 Adds the option to output the error reports to files
-- Ver 0.3.0 Adds the option to extend the default rules instead of overriding them
-- Ver 0.2.0 Adds the option to load custom HTMLHint rules
-- Ver 0.1.0
-    - Use [file-changed](https://github.com/poppinlp/file-changed) to do newer job
-    - Reconstruct whole project, make it easy to use
-- Ver 0.0.7 Remove `django` option; Add `ignore` option to support it and more; Fix some bugs; Add default rules
-- Ver 0.0.6 Update `dir2pattern` to 0.0.4
-- Ver 0.0.5 Bugfix
-- Ver 0.0.4
-    - Fix README
-    - Bugfix about `filter.cwd`
-    - Update `dir2pattern` to 0.0.3 to fix bug
-- Ver 0.0.3
-    - Support `newer` config option
-    - Support file path pattern
-    - Support path filter
-- Ver 0.0.2 Fix global options not work
-- Ver 0.0.1 Main
+[gpa-img]:https://img.shields.io/codeclimate/github/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
+[gpa-url]:https://codeclimate.com/github/poppinlp/grunt-htmlhint-plus
+
+[lint-img]:https://img.shields.io/badge/code%20style-handsome-brightgreen.svg?style=flat-square
+[lint-url]:https://github.com/poppinlp/eslint-config-handsome
+
+[dep-img]:https://img.shields.io/david/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
+[dep-url]:https://david-dm.org/poppinlp/grunt-htmlhint-plus
+
+[dev-dep-img]:https://img.shields.io/david/dev/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
+[dev-dep-url]:https://david-dm.org/poppinlp/grunt-htmlhint-plus#info=devDependencies
+
+[npm-ver-img]:https://img.shields.io/npm/v/grunt-htmlhint-plus.svg?style=flat-square
+[npm-dl-img]:https://img.shields.io/npm/dm/grunt-htmlhint-plus.svg?style=flat-square
+[npm-lc-img]:https://img.shields.io/npm/l/grunt-htmlhint-plus.svg?style=flat-square
+[npm-url]:https://www.npmjs.com/package/grunt-htmlhint-plus
