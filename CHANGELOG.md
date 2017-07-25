@@ -1,4 +1,4 @@
-- 0.5.0 Support custom rules as documented on htmlhint
+- 0.5.1 Support custom rules as documented on htmlhint
 - 0.4.3 Changes the default for logging to not include successful files; moves success to verbose
 - 0.4.2 Merge [PR](https://github.com/poppinlp/grunt-htmlhint-plus/pull/15)
 - 0.4.1 Bugfix for [issue](https://github.com/poppinlp/grunt-htmlhint-plus/issues/12)
