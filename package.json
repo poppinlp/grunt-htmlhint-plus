@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "eslint": "^5.15.3",
-    "eslint-config-handsome": "^0.6.3",
+    "eslint-config-handsome": "^0.5.0",
     "grunt": ">=0.4.0"
   },
   "files": [
