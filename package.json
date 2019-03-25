@@ -32,12 +32,12 @@
   "dependencies": {
     "checkstyle-formatter": "^1.0.0",
     "file-changed": "^1.1.2",
-    "htmlhint": "^0.9.13",
-    "lodash": "^4.17.4"
+    "htmlhint": "^0.11.0",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "eslint": "^4.3.0",
-    "eslint-config-handsome": "^0.2.3",
+    "eslint": "^5.15.3",
+    "eslint-config-handsome": "^0.6.3",
     "grunt": ">=0.4.0"
   },
   "files": [
