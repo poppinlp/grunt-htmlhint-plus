@@ -1,6 +1,6 @@
 {
   "name": "grunt-htmlhint-plus",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Grunt task to hint html code.",
   "main": "tasks/htmlhintplus.js",
   "repository": {
