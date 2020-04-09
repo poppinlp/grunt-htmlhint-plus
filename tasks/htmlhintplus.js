@@ -35,12 +35,10 @@ module.exports = function (grunt) {
 			customRules = [],
 			reducedResults = [],
 			extendRules = options.extendRules || false,
-			outputTypes = options.output ? (_.isArray(options.output) ? options.output : options.output.split('|')) : ['console'],
+			outputTypes = options.output ? (Array.isArray(options.output) ? options.output : options.output.split('|')) : ['console'],
 			fc = new Fc();
 
-		outputTypes = _.map(outputTypes, function (type) {
-			return type.toString().toLowerCase();
-		});
+		outputTypes = outputTypes.map(type => type.toString().toLowerCase());
 
 		if (options.hasOwnProperty('customRules') && typeof options.customRules == 'object') {
 			customRules = options.customRules;

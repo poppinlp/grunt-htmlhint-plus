@@ -1,1 +1,1 @@
-extends: handsome
+extends: eslint:recommended
