@@ -162,23 +162,3 @@ Run the test demo:
 ```shell
 grunt test
 ```
-
-[ci-img]:https://img.shields.io/travis/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
-[ci-url]:https://travis-ci.org/poppinlp/grunt-htmlhint-plus
-
-[gpa-img]:https://img.shields.io/codeclimate/github/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
-[gpa-url]:https://codeclimate.com/github/poppinlp/grunt-htmlhint-plus
-
-[lint-img]:https://img.shields.io/badge/code%20style-handsome-brightgreen.svg?style=flat-square
-[lint-url]:https://github.com/poppinlp/eslint-config-handsome
-
-[dep-img]:https://img.shields.io/david/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
-[dep-url]:https://david-dm.org/poppinlp/grunt-htmlhint-plus
-
-[dev-dep-img]:https://img.shields.io/david/dev/poppinlp/grunt-htmlhint-plus.svg?style=flat-square
-[dev-dep-url]:https://david-dm.org/poppinlp/grunt-htmlhint-plus#info=devDependencies
-
-[npm-ver-img]:https://img.shields.io/npm/v/grunt-htmlhint-plus.svg?style=flat-square
-[npm-dl-img]:https://img.shields.io/npm/dm/grunt-htmlhint-plus.svg?style=flat-square
-[npm-lc-img]:https://img.shields.io/npm/l/grunt-htmlhint-plus.svg?style=flat-square
-[npm-url]:https://www.npmjs.com/package/grunt-htmlhint-plus
