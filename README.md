@@ -1,10 +1,7 @@
 # Grunt-htmlhint-plus
 
 [![Build Status][ci-img]][ci-url]
-[![Code GPA][gpa-img]][gpa-url]
 [![Code style][lint-img]][lint-url]
-[![Dependency Status][dep-img]][dep-url]
-[![Dev Dependency Status][dev-dep-img]][dev-dep-url]
 [![NPM version][npm-ver-img]][npm-url]
 [![NPM downloads][npm-dl-img]][npm-url]
 [![NPM license][npm-lc-img]][npm-url]
